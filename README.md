@@ -1,2 +1,2 @@
-# RocketDriver_V2_1
-new version as of 9/27/2022
+# RocketDriver_V2_0
+Next version of the RocketDriver Embedded System
