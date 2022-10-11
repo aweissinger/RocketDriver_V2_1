@@ -7,7 +7,7 @@
 #include "Adafruit_MCP9808.h"
 #include "ALARAUtilityFunctions.h"
 
-//#include "thermocoupleT_K.h"
+#include "thermocoupleT_K.h"
 #pragma once
 
 enum TCType
@@ -70,12 +70,24 @@ class THERMOCOUPLE
         uint32_t priorTimestampMicros = 0;
         bool nodeIDCheck = false;                           // Whether this object should operate on this node
 
+        // min and max voltage values IN MICROVOLTS for TC types, these are used for bounds checking raw values
+        static const int32_t minV_Ktype = -6258;
+        static const int32_t minV_Ttype = -6258;
+        static const int32_t maxV_Ktype = 54886;
+        static const int32_t maxV_Ttype = 20872;
+        // working min and max voltages to be set based on TC type in begin
+        int32_t minV;
+        int32_t maxV;
+
         RTD_BREAKOUT& tempsensor;
         elapsedMillis RTDtimer;
         elapsedMillis timer;
         bool newRTD = false;
         uint32_t currentRawValue1{};               // holds the current value for the sensor
         uint32_t currentRawValue2{};               // holds the current value for the sensor
+        int32_t currentRawDiffValue = 0;               // holds the current value for the sensor
+        int32_t currentDiffVoltageValue = 0;               // holds the current value for the sensor IN MICROVOLTS
+        int32_t runningRawDiffValue = 0;               // holds the current value for the sensor
 
         float currentConvertedValue{};
         float priorConvertedValue{};
@@ -131,6 +143,8 @@ class THERMOCOUPLE
         float linearRegressionLeastSquared_PID();
         // Constructor
         THERMOCOUPLE(uint32_t setSensorID, uint32_t setSensorNodeID, uint8_t setADCinput1, uint8_t setADCinput2, TCType setTc, RTD_BREAKOUT* setTempsensor, uint16_t setRefVoltage = 1200);
+
+        void TCconversion();
 };
 
 
