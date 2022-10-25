@@ -30,8 +30,8 @@ void EngineController::begin()
     if (nodeIDCheck)
     {
         // setup initial firing times to propulsion devices
-        pilotMVFuelValve.setState(ValveState::Closed, fuelMVAutosequenceActuation);
-        pilotMVLoxValve.setState(ValveState::Closed, loxMVAutosequenceActuation);
+        pilotMVFuelValve.setCommandState(ValveCommandState::CloseCommanded, fuelMVAutosequenceActuation);
+        pilotMVLoxValve.setCommandState(ValveCommandState::CloseCommanded, loxMVAutosequenceActuation);
         igniter1.setState(PyroState::Off, igniter1Actuation);
         igniter2.setState(PyroState::Off, igniter2Actuation);
         controllerConfigUpdate = true;
@@ -207,9 +207,9 @@ void EngineController::stateOperations()
         autoSequenceTargetPcUpdate(false);
         //if (priorState != EngineControllerState::Passive)
         //{
-        pilotMVFuelValve.setState(ValveState::CloseCommanded, fuelMVAutosequenceActuation);
-        pilotMVLoxValve.setState(ValveState::CloseCommanded, loxMVAutosequenceActuation);
-        pneumaticVent.setState(ValveState::CloseCommanded);
+        pilotMVFuelValve.setCommandState(ValveCommandState::CloseCommanded, fuelMVAutosequenceActuation);
+        pilotMVLoxValve.setCommandState(ValveCommandState::CloseCommanded, loxMVAutosequenceActuation);
+        pneumaticVent.setCommandState(ValveCommandState::CloseCommanded);
         sensorState = SensorState::Slow;
         //}
         MVFuelFired = false;
@@ -223,9 +223,9 @@ void EngineController::stateOperations()
         autoSequenceTargetPcUpdate(true);
         if (priorState != EngineControllerState::Armed)
         {
-        pilotMVFuelValve.setState(ValveState::CloseCommanded);
-        pilotMVLoxValve.setState(ValveState::CloseCommanded);
-        pneumaticVent.setState(ValveState::CloseCommanded);
+        pilotMVFuelValve.setCommandState(ValveCommandState::CloseCommanded);
+        pilotMVLoxValve.setCommandState(ValveCommandState::CloseCommanded);
+        pneumaticVent.setCommandState(ValveCommandState::CloseCommanded);
         sensorState = SensorState::Fast;
         igniter1.setState(PyroState::OffCommanded, igniter1Actuation);
         igniter2.setState(PyroState::OffCommanded, igniter2Actuation);
@@ -250,15 +250,15 @@ void EngineController::stateOperations()
         } */
 
             //Fuel MV autosequence check
-            pilotMVFuelValve.setState(ValveState::FireCommanded, fuelMVAutosequenceActuation);
+            pilotMVFuelValve.setCommandState(ValveCommandState::FireSequenceOpenCommanded, fuelMVAutosequenceActuation);
             //Lox MV autosequence check
-            pilotMVLoxValve.setState(ValveState::FireCommanded, loxMVAutosequenceActuation);
+            pilotMVLoxValve.setCommandState(ValveCommandState::FireSequenceOpenCommanded, loxMVAutosequenceActuation);
 
         igniter1.setState(PyroState::FireCommanded, igniter1Actuation);
         igniter2.setState(PyroState::FireCommanded, igniter2Actuation);
 
         // devices not conditional within autosequence below
-        pneumaticVent.setState(ValveState::CloseCommanded);
+        pneumaticVent.setCommandState(ValveCommandState::CloseCommanded);
         sensorState = SensorState::Fast;
         break;
     case EngineControllerState::Shutdown:
@@ -266,9 +266,9 @@ void EngineController::stateOperations()
         if (priorState != EngineControllerState::Shutdown)
         {
         sensorState = SensorState::Fast;
-        pilotMVFuelValve.setState(ValveState::CloseCommanded);
-        pilotMVLoxValve.setState(ValveState::CloseCommanded);
-        pneumaticVent.setState(ValveState::CloseCommanded);
+        pilotMVFuelValve.setCommandState(ValveCommandState::CloseCommanded);
+        pilotMVLoxValve.setCommandState(ValveCommandState::CloseCommanded);
+        pneumaticVent.setCommandState(ValveCommandState::CloseCommanded);
         sensorState = SensorState::Fast;
         igniter1.setState(PyroState::OffCommanded);
         igniter2.setState(PyroState::OffCommanded);

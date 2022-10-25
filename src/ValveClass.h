@@ -13,20 +13,40 @@ enum ValveType
     NormalOpen,
 };
 
+struct ValveConfig
+{
+    ValveType valveType;
+    uint32_t fullDutyTime;
+    uint16_t fullDuty;
+    uint16_t holdDuty;
+    //uint16_t warmDuty;
+}__attribute__((packed));
+
+union ValveConfigUnion
+{
+    ValveConfig configStruct;
+    uint8_t configByteArray[16];    //needs to matche sizeof the config struct
+};
+
 class Valve
 {
 
     private:
         const uint32_t valveID = 99;                          // Valve ID number 
         const uint8_t valveNodeID = 99;                      // NodeID the valve is controlled by
+        ValveConfig configStruct;
+        
         ValveType valveType_Default;                  // sets the valve type, either normal closed or normal open
         ValveType valveType;                  // sets the valve type, either normal closed or normal open
         const u_int8_t ALARA_HP_Channel = 0;
         uint8_t pinPWM = 99;                              // Valve PWM pin for actuation
         uint8_t pinDigital = 99;                          // Valve Digital Out pin for actuation
         uint8_t pinADC = 99;                              // Valve ADC read pin
-        uint32_t fullDutyTime_Default = 2000;                // Time PWM needs to be at full duty for actuation, in MICROS
+        uint32_t fullDutyTime_Default = 25000;                // Time PWM needs to be at full duty for actuation, in MICROS
         uint32_t fullDutyTime;                // Time PWM needs to be at full duty for actuation, in MICROS
+        ValveCommandState commandState;
+        ValveCommandState commandPriorState;
+        bool newCommand;                           // Tracks the valve state
         ValveState state;
         ValveState priorState;                           // Tracks the valve state
         elapsedMicros timer;                        // timer for the valve, used for changing duty cycles, in MICROS
@@ -45,13 +65,22 @@ class Valve
     
     public:
     
+    // OBSOLETE constructor, define the valve ID here, and the pin that controls the valve, setFireDelay is only parameter that can be left blank
+        /* Valve(uint32_t setValveID, uint8_t setValveNodeID, ValveType setValveType_Default, uint8_t setALARA_HP_Channel, uint32_t setFullDutyTime_Default,  
+        uint16_t setHoldDuty_Default = 64, bool setNodeIDCheck = false); */
     // constructor, define the valve ID here, and the pin that controls the valve, setFireDelay is only parameter that can be left blank
-        Valve(uint32_t setValveID, uint8_t setValveNodeID, ValveType setValveType_Default, uint8_t setALARA_HP_Channel, uint32_t setFullDutyTime_Default,  
-        bool setAbortHaltDeviceBool = false, uint16_t setHoldDuty_Default = 64, bool setNodeIDCheck = false);
+        Valve(uint32_t setValveID, uint8_t setValveNodeID, uint8_t setALARA_HP_Channel, ValveConfig setConfigStruct, uint32_t setFullDutyTime_Default = 25000,  
+        uint16_t setHoldDuty_Default = 64, bool setNodeIDCheck = false);
     // Default constructor with no args    
         Valve(ValveType setValveType_Default, bool setNodeIDCheck = false);
-    // a start up method, to set pins from within setup()
+    // a start up method, to set pins from within setup(), pinArray is specific to ALARA V2_1 pin format and channels
         void begin(uint8_t pinArrayIn[][11]);
+    // Config set functions
+        void configSet();
+        // Config read from EEPROM to be called on startup
+        void configEEPROMRead();
+        // To be used anytime a config is updated to write changes into EEPROM
+        void configEEPROMWrite();
 
     // access functions defined in place
 
@@ -75,27 +104,28 @@ class Valve
         bool getAbortHaltDeviceBool(){return abortHaltDeviceBool;}
 
     // set functions, allows the setting of a variable
-        void setState(ValveState newState) 
+        void setCommandState(ValveCommandState newState) 
             {
-                    if (newState != state)
+                    if (newState != commandState)
                     {
-                        priorState = state;
-                        state = newState;
+                        commandPriorState = commandState;
+                        commandState = newState;
+                        newCommand = true;
                     }
                     else
                     {
                         // do nothing
                     }
             }
-        void setState(ValveState newState, int64_t fireTimeIn) 
+        void setCommandState(ValveCommandState newState, int64_t fireTimeIn)
             {
                 // Only do anything in the case of the fireTimeIn if the state sent is FireCommanded
                 //if (newState == ValveState::FireCommanded)
                     //{
-                    if (newState != state)
+                    if (newState != commandState)
                         {
-                        priorState = state;
-                        state = newState;
+                        commandPriorState = commandState;
+                        commandState = newState;
                         // set the autosequence firing time
                         fireSequenceActuation = fireTimeIn;
                         }
@@ -106,49 +136,7 @@ class Valve
                     //}
             }
 
-/*
-         void setState(ValveState newState) 
-            {
-                if (newState == ValveState::OpenCommanded)
-                {
-                    if (priorState == ValveState::OpenProcess || priorState == ValveState::Open)
-                    {
-                        //Don't update the state, it's already doing opening operations
-                    }
-                    else
-                    {
-                    if (newState != state)
-                    {
-                        priorState = state;
-                    }
-                    state = newState;
-                    }
-                }
-                else if (newState == ValveState::CloseCommanded)
-                {
-                    if (priorState == ValveState::CloseProcess || priorState == ValveState::Closed)
-                    {
-                        //Don't update the state, it's already doing closing operations
-                    }
-                    else
-                    {
-                    if (newState != state)
-                    {
-                        priorState = state;
-                    }
-                    state = newState;
-                    }
-                }
-                else
-                {
-                if (newState != state)
-                {
-                    priorState = state;
-                }
-                state = newState;
-                }
-            }
- */            
+            
         //every time a state is set, the timer should reset
         //Is the above still true?
         // set function for current autosequence time

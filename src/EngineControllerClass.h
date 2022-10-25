@@ -122,14 +122,14 @@ class EngineController
                 state = newState;
             }
     //valve and pyro state set functions
-        void setPilotMVFuelValveState(ValveState pilotMVFuelValveStateIn) {if (pilotMVFuelValveStateIn != ValveState::NullReturn){pilotMVFuelValve.setState(pilotMVFuelValveStateIn);}}
-        void setPilotMVLoxValveState(ValveState pilotMVLoxValveStateIn) {if (pilotMVLoxValveStateIn != ValveState::NullReturn){pilotMVLoxValve.setState(pilotMVLoxValveStateIn);}}
+        void setPilotMVFuelValveState(ValveCommandState pilotMVFuelValveStateIn) {if (pilotMVFuelValveStateIn != ValveCommandState::NullReturn){pilotMVFuelValve.setCommandState(pilotMVFuelValveStateIn);}}
+        void setPilotMVLoxValveState(ValveCommandState pilotMVLoxValveStateIn) {if (pilotMVLoxValveStateIn != ValveCommandState::NullReturn){pilotMVLoxValve.setCommandState(pilotMVLoxValveStateIn);}}
         void setIgniter1State(PyroState igniter1StateIn) {if (igniter1StateIn != PyroState::NullReturn){igniter1.setState(igniter1StateIn);}}
         void setIgniter2State(PyroState igniter2StateIn) {if (igniter2StateIn != PyroState::NullReturn){igniter2.setState(igniter2StateIn);}}
 
 
-        void testSetPilotMVFuelValveState(ValveState pilotMVFuelValveStateIn) {if(testPass) {pilotMVFuelValve.setState(pilotMVFuelValveStateIn);}}
-        void testSetPilotMVLoxValveState(ValveState pilotMVLoxValveStateIn) {if(testPass) {pilotMVLoxValve.setState(pilotMVLoxValveStateIn);}}
+        void testSetPilotMVFuelValveState(ValveCommandState pilotMVFuelValveStateIn) {if(testPass) {pilotMVFuelValve.setCommandState(pilotMVFuelValveStateIn);}}
+        void testSetPilotMVLoxValveState(ValveCommandState pilotMVLoxValveStateIn) {if(testPass) {pilotMVLoxValve.setCommandState(pilotMVLoxValveStateIn);}}
         void testSetIgniter1State(PyroState igniter1StateIn) {if(testPass) {igniter1.setState(igniter1StateIn);}}
         void testSetIgniter2State(PyroState igniter2StateIn) {if(testPass) {igniter2.setState(igniter2StateIn);}}
 

@@ -177,13 +177,13 @@ class TankPressController
     // vent line setting - for bang bang with two tank controllers sharing vent line control
         void setPressVentLineStateBang2(ValveState ventLineSetIn) {pressLineVentStateBang2 = ventLineSetIn;}
 
-        void setPrimaryPressValveState(ValveState primaryPressValveStateIn) {if (primaryPressValveStateIn != ValveState::NullReturn) {primaryPressValve.setState(primaryPressValveStateIn);}}
-        void setPressLineVentState(ValveState pressLineVentStateIn) {if (pressLineVentStateIn != ValveState::NullReturn) {pressLineVent.setState(pressLineVentStateIn);}}
-        void setTankVentState(ValveState tankVentStateIn) {if (tankVentStateIn != ValveState::NullReturn) {tankVent.setState(tankVentStateIn);}}
+        void setPrimaryPressValveState(ValveCommandState primaryPressValveStateIn) {if (primaryPressValveStateIn != ValveCommandState::NullReturn) {primaryPressValve.setCommandState(primaryPressValveStateIn);}}
+        void setPressLineVentState(ValveCommandState pressLineVentStateIn) {if (pressLineVentStateIn != ValveCommandState::NullReturn) {pressLineVent.setCommandState(pressLineVentStateIn);}}
+        void setTankVentState(ValveCommandState tankVentStateIn) {if (tankVentStateIn != ValveCommandState::NullReturn) {tankVent.setCommandState(tankVentStateIn);}}
         //test state set functions
-        void testSetPrimaryPressValveState(ValveState primaryPressValveStateIn) {if(testPass) {primaryPressValve.setState(primaryPressValveStateIn);}}
-        void testSetPressLineVentState(ValveState pressLineVentStateIn) {if(testPass) {pressLineVent.setState(pressLineVentStateIn);}}
-        void testSetTankVentState(ValveState tankVentStateIn) {if(testPass) {tankVent.setState(tankVentStateIn);}}
+        void testSetPrimaryPressValveState(ValveCommandState primaryPressValveStateIn) {if(testPass) {primaryPressValve.setCommandState(primaryPressValveStateIn);}}
+        void testSetPressLineVentState(ValveCommandState pressLineVentStateIn) {if(testPass) {pressLineVent.setCommandState(pressLineVentStateIn);}}
+        void testSetTankVentState(ValveCommandState tankVentStateIn) {if(testPass) {tankVent.setCommandState(tankVentStateIn);}}
     //setting functions - have all inputs bounded to catch nonsense CAN config msg inputs
         void setVentFailsafePressure(float ventFailsafePressureIn){if (ventFailsafePressureIn <= 10000 && ventFailsafePressureIn >= 0) {ventFailsafePressure = ventFailsafePressureIn;controllerConfigUpdate = true;}}
         void setVentFailsafeArm(bool armIn){ventFailsafeArm = armIn;}

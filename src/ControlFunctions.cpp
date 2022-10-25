@@ -867,121 +867,121 @@ void commandExecute(VehicleState& currentState, VehicleState& priorState, Missio
             case command_closeHiPress:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveCommandState::CloseCommanded);
                 }
                 break;
             case command_openHiPress:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveCommandState::OpenCommanded);
                 }
                 break;
             case command_closeHiPressVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPressLineVentState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPressLineVentState(ValveCommandState::CloseCommanded);
                 }
                 break;
             case command_openHiPressVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPressLineVentState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(HighPressTankController_ArrayPointer)->testSetPressLineVentState(ValveCommandState::OpenCommanded);
                 }
                 break;
             case command_closeLoxVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetTankVentState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetTankVentState(ValveCommandState::CloseCommanded);
                 }
                 break;
             case command_openLoxVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetTankVentState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetTankVentState(ValveCommandState::OpenCommanded);
                 }
                 break;
             case command_closeLoxPressValve:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveCommandState::CloseCommanded);
                 }           
                 break;
             case command_openLoxPressValve:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveCommandState::OpenCommanded);
                 }            
                 break; 
             case command_closeLoxPressLineVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPressLineVentState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPressLineVentState(ValveCommandState::CloseCommanded);
                 }
                 break;
             case command_openLoxPressLineVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPressLineVentState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(LoxTankController_ArrayPointer)->testSetPressLineVentState(ValveCommandState::OpenCommanded);
                 }
                 break; 
             case command_closeFuelVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetTankVentState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetTankVentState(ValveCommandState::CloseCommanded);
                 }           
                 break;
             case command_openFuelVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetTankVentState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetTankVentState(ValveCommandState::OpenCommanded);
                 }
                 break;
             case command_closeFuelPressValve:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveCommandState::CloseCommanded);
                 }
                 break;
             case command_openFuelPressValve:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPrimaryPressValveState(ValveCommandState::OpenCommanded);
                 }
                 break; 
             case command_closeFuelPressLineVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPressLineVentState(ValveState::CloseCommanded);
+                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPressLineVentState(ValveCommandState::CloseCommanded);
                 }        
                 break;
             case command_openFuelPressLineVent:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPressLineVentState(ValveState::OpenCommanded);
+                    tankPressControllerArray.at(FuelTankController_ArrayPointer)->testSetPressLineVentState(ValveCommandState::OpenCommanded);
                 }           
                 break; 
             case command_closeFuelMV:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVFuelValveState(ValveState::CloseCommanded);
+                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVFuelValveState(ValveCommandState::CloseCommanded);
                 }        
                 break;
             case command_openFuelMV:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVFuelValveState(ValveState::OpenCommanded);
+                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVFuelValveState(ValveCommandState::OpenCommanded);
                 }     
                 break;
             case command_closeLoxMV:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVLoxValveState(ValveState::CloseCommanded);
+                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVLoxValveState(ValveCommandState::CloseCommanded);
                 }            
                 break;
             case command_openLoxMV:
                 if(currentState == VehicleState::test || currentState == VehicleState::offNominal)
                 {
-                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVLoxValveState(ValveState::OpenCommanded);
+                    engineControllerArray.at(Engine1Controller_ArrayPointer)->testSetPilotMVLoxValveState(ValveCommandState::OpenCommanded);
                 }            
                 break;
             case command_engineIgniterPyro1_Off:

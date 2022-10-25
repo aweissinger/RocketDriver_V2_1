@@ -4,6 +4,19 @@
 #include "PyroStates.h"
 #include <Arduino.h>
 
+struct PyroConfig
+{
+    uint32_t liveOutTime;
+    //uint16_t fullDuty;
+    //uint16_t holdDuty;
+    bool hasFired;
+};
+
+union PyroConfigUnion
+{
+    PyroConfig configStruct;
+    uint8_t configByteArray[20];
+};
 
 class Pyro
 {
@@ -17,6 +30,7 @@ class Pyro
         elapsedMicros timer;
         PyroState state;
         PyroState priorState;
+        bool hasFired;
         uint32_t liveOutTime;
         uint32_t liveOutTime_Default;
         bool nodeIDCheck;                           // Whether this object should operate on this node
